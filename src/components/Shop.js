@@ -8,29 +8,32 @@ import {useState, useEffect} from 'react';
 
 function Shop() {
 
-  const [covidLatestInfo, setCovidLatestInfo] = useState([])
+  const [responseData, setREsponseData] = useState([])
 
   useEffect(()=> {
     fetchData()
   },[])
 
   const fetchData = async () => {
-    const data = await fetch('https://api.covid19api.com/total/country/germany/status/confirmed?from=2020-03-01T00:00:00Z&to=2020-04-01T00:00:00Z')
+    const data = await fetch('https://fortnite-api.com/v2/cosmetics/br')
+
     data ? console.log('raw data:', data) : console.log('..loading')
-    const covidInfo = await data.json()
-    console.log('covid info status:', covidInfo)
-    setCovidLatestInfo(covidInfo)
+    const response = await data.json()
+    console.log(' response json:', response)
+    setREsponseData(response.data)
   }
   let i = 0
   return (
     <div>
         <h1>Shop page</h1>
-        {covidLatestInfo.map(row => (
-          <h2 key={++i}>At {row.Date.slice(0,10)} there are {row.Cases} confirmed cases <br/> in {row.Country}
-        </h2>)
-        )}
+        {Object.keys(responseData).map((field) => (
+          <h2 key={++i}> {responseData[field].name} and {responseData[field].id} and 
+          {Object.keys(responseData[field].images).map((item, i=0) => (
+            <h3>{++i} - {item}</h3>
+          ))}</h2>
+        ))}
     </div>
-  );
+  );  
 }
 
 export default Shop;

@@ -8,7 +8,7 @@ import {useState, useEffect} from 'react';
 
 function Shop() {
 
-  const [responseData, setREsponseData] = useState([])
+  const [responseData, setResponseData] = useState([])
 
   useEffect(()=> {
     fetchData()
@@ -20,17 +20,21 @@ function Shop() {
     data ? console.log('raw data:', data) : console.log('..loading')
     const response = await data.json()
     console.log(' response json:', response)
-    setREsponseData(response.data)
+    setResponseData(response.data)
   }
+
+  let imgURL = new Set()
+  Array.of(responseData).forEach(item => item.map(deepItem => imgURL.add(deepItem.images.icon)))
+  console.log(imgURL)
   let i = 0
   return (
-    <div>
+    <div> 
         <h1>Shop page</h1>
-        {Object.keys(responseData).map((field) => (
-          <h2 key={++i}> {responseData[field].name} and {responseData[field].id} and 
-          {Object.keys(responseData[field].images).map((item, i=0) => (
-            <h3>{++i} - {item}</h3>
-          ))}</h2>
+        {imgURL.forEach((item) => console.log(++i, item))}
+        {responseData.map((item, itemId) => (
+          <h2 key={itemId}>{item.name} - {item.id} 
+          <br/> {item.description}
+          </h2>
         ))}
     </div>
   );  

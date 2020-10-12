@@ -1,10 +1,6 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
-
-// add function to fetch data from api (async)
-// wrap it in the useEffect
-// save the data in a state
-// render it one prop in the shop page
+import './styles/cardShopStyle.css'
 
 function Shop() {
 
@@ -24,19 +20,30 @@ function Shop() {
   }
 
   let imgURL = []
-  Array.of(responseData).forEach(item => item.map(deepItem => imgURL.push(deepItem.images.icon)))
-  console.log(imgURL)
+  let mapOfUrls = new Map()
+  Array.of(responseData).forEach(item => item.map(deepItem => imgURL.push(deepItem.id)))
+  Array.of(responseData).forEach(item => item.map(deepItem => mapOfUrls.set(deepItem.id, deepItem.images.icon)))
+
+  console.log('imgURL:', imgURL)
+  console.log('mapOfUrls:', mapOfUrls)
   let i = 0
   return (
     <div> 
         <h1>Shop page</h1>
         {imgURL.forEach((item) => console.log(++i, item))}
-        {/* {responseData.map((item, itemId) => (
-          <h2 key={itemId}>{item.name} - {item.id} 
-          <br/> {item.description}
-          </h2>
-        ))} */}
-        {imgURL.map(item => (<img src={item} alt='smthg should be here'/>))}
+
+        {imgURL.map(item => (
+          <div className='main'>
+            <div className="card">
+              {/* <img src="img_avatar2.png" alt="Avatar" style="width:100%" /> */}
+              <img src={mapOfUrls.get(item)} width='100%' alt='smthg should be here' />
+              <div className="container">
+                <h4><b>{item}</b></h4> 
+                <p>Interior Designer</p> 
+              </div>
+            </div>
+          </div>
+        ))}
     </div>
   );  
 }

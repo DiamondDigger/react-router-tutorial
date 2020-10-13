@@ -8,7 +8,9 @@ function Shop() {
   const [responseData, setResponseData] = useState([])
 
   useEffect(()=> {
-    fetchData()
+    responseData.length > 0 
+    ? console.log('data was uploaded')
+    : fetchData()
   },[])
 
   const fetchData = async () => {
@@ -23,6 +25,7 @@ function Shop() {
   let arrOfId = []
   let mapOfNames = new Map()
   let mapOfUrls = new Map()
+
   Array.of(responseData).forEach(item => item.map(deepItem => arrOfId.push(deepItem.id)))
   Array.of(responseData).forEach(item => item.map(deepItem => mapOfNames.set(deepItem.id, deepItem.name)))
   Array.of(responseData).forEach(item => item.map(deepItem => mapOfUrls.set(deepItem.id, deepItem.images.icon)))
@@ -30,7 +33,8 @@ function Shop() {
   console.log('arrOfId:', arrOfId)
   console.log('mapOfName:', mapOfNames)
   console.log('mapOfUrls:', mapOfUrls)
-  let i = 0
+
+  console.log(`render of Shop`)
   return (
     <div> 
         <h1>Shop page</h1>

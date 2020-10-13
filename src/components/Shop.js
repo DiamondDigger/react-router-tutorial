@@ -1,7 +1,7 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
 import './styles/cardShopStyle.css'
-import '../'
+import {Link} from 'react-router-dom'
 
 function Shop() {
 
@@ -20,27 +20,30 @@ function Shop() {
     setResponseData(response.data)
   }
 
-  let imgURL = []
+  let arrOfId = []
+  let mapOfNames = new Map()
   let mapOfUrls = new Map()
-  Array.of(responseData).forEach(item => item.map(deepItem => imgURL.push(deepItem.id)))
+  Array.of(responseData).forEach(item => item.map(deepItem => arrOfId.push(deepItem.id)))
+  Array.of(responseData).forEach(item => item.map(deepItem => mapOfNames.set(deepItem.id, deepItem.name)))
   Array.of(responseData).forEach(item => item.map(deepItem => mapOfUrls.set(deepItem.id, deepItem.images.icon)))
 
-  console.log('imgURL:', imgURL)
+  console.log('arrOfId:', arrOfId)
+  console.log('mapOfName:', mapOfNames)
   console.log('mapOfUrls:', mapOfUrls)
   let i = 0
   return (
     <div> 
         <h1>Shop page</h1>
-        {imgURL.forEach((item) => console.log(++i, item))}
 
-        {imgURL.map(item => (
+        {arrOfId.map(item => (
           <div className='main'>
             <div className="card">
-              {/* <img src="img_avatar2.png" alt="Avatar" style="width:100%" /> */}
               <img src={mapOfUrls.get(item)} width='100%' alt={'./'} />
               <div className="container">
-                <h4><b>{item}</b></h4> 
-                <p>Interior Designer</p> 
+                <h4><b>{mapOfNames.get(item)}</b></h4>
+                <p>
+                <Link to={`/shop/${item}`}>More descripion</Link>
+                </p> 
               </div>
             </div>
           </div>

@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  overflow: hidden;
+  scroll-margin-right: none;
 }
 
 nav {

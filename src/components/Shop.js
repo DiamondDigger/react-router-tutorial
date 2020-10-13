@@ -1,6 +1,7 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
 import './styles/cardShopStyle.css'
+import '../'
 
 function Shop() {
 
@@ -36,7 +37,7 @@ function Shop() {
           <div className='main'>
             <div className="card">
               {/* <img src="img_avatar2.png" alt="Avatar" style="width:100%" /> */}
-              <img src={mapOfUrls.get(item)} width='100%' alt='smthg should be here' />
+              <img src={mapOfUrls.get(item)} width='100%' alt={'./'} />
               <div className="container">
                 <h4><b>{item}</b></h4> 
                 <p>Interior Designer</p> 
